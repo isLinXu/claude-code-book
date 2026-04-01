@@ -1,0 +1,15 @@
+{
+  "name": "agent-coding-book",
+  "version": "1.0.0",
+  "description": "Agent 开发：从原理到生产级实践 - 人类与Agent双模式在线阅读",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "node scripts/build-agent-api.mjs && vitepress build",
+    "preview": "vitepress preview",
+    "build:agent-api": "node scripts/build-agent-api.mjs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  }
+}

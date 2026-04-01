@@ -1,0 +1,33 @@
+# Agent 开发：从原理到生产级实践
+
+> 12卷52章 · 22万字 · 863个代码示例 · 780个核心概念
+
+本书是面向开发者的 AI Agent 系统性技术指南，覆盖从概念认知到生产级部署的完整链路。
+
+## 内容结构
+
+- [认知篇（卷一）](/claude-code-book/vol1/vol1_index): 什么是Agent、技术演进、编程范式
+- [基础篇（卷二）](/claude-code-book/vol2/vol2_index): 核心概念、LLM、工具调用、记忆管理
+- [进阶篇（卷三）](/claude-code-book/vol3/vol3_index): 多Agent协作、推理规划、评估优化、安全对齐
+- [高级篇（卷四）](/claude-code-book/vol4/vol4_index): RAG增强、外部系统、多模态、可观测性
+- [专项篇（卷五）](/claude-code-book/vol5/vol5_index): 代码Agent、数据分析、内容创作、自动化
+- [附录（卷六）](/claude-code-book/vol6/vol6_index): 框架对比、工具速查、部署指南、术语表
+- [开发技法（卷七）](/claude-code-book/vol7/vol7_index): Prompt技巧、状态机、错误处理、测试、调优
+- [实战案例（卷八）](/claude-code-book/vol8/vol8_index): 客服系统、代码审查、数据平台、内容流水线
+- [设计模式（卷九）](/claude-code-book/vol9/vol9_index): 单Agent、多Agent编排、人机协作、企业级
+- [生产级平台（卷十）](/claude-code-book/vol10/vol10_index): 架构设计、高可用、监控告警、安全、CI/CD
+- [生态跨平台（卷十一）](/claude-code-book/vol11/vol11_index): 生态全景、跨平台、开源社区、商业化
+- [未来展望（卷十二）](/claude-code-book/vol12/vol12_index): Agent原生应用、AGI、伦理、行动指南
+
+## Agent API
+
+结构化 JSON 接口，Agent 可直接获取内容：
+
+- 全书索引: GET /claude-code-book/agent-api/manifest.json
+- 章节JSON: GET /claude-code-book/agent-api/chapters/{ch01~ch48,appendixA~D}.json
+- 章节MD:   GET /claude-code-book/agent-api/chapters/{id}.md
+- 技能书:   GET /claude-code-book/agent-api/skills/{id}.md
+
+## 技能书
+
+7本可安装的 SKILL.md 技能包：first-agent, prompt-engineering, rag-agent, multi-agent, agent-testing, production-deploy, enterprise-patterns
