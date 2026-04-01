@@ -176,3 +176,103 @@ ch01 → ch04 → ch08 → ch35 → ch36 → ch37 → ch39
 | 内容即终点 | 内容 → 可执行代码 → 可安装技能 |
 | 站点描述靠 SEO meta | llms.txt 标准，LLM 直接理解 |
 | 读者是人 | 读者 = 人 + Agent |
+
+---
+
+## 完整交互示例：Agent 如何消费本站内容
+
+以下演示一个 Agent 通过本站 API 学习"如何构建 RAG Agent"的完整过程。
+
+### Step 1：获取站点概述
+
+```bash
+# Agent 首先访问 llms.txt 了解站点
+GET https://islinxu.github.io/claude-code-book/llms.txt
+```
+
+```
+# Agent 开发：从原理到生产级实践
+> 12卷52章 · 22万字 · 863个代码示例 · 780个核心概念
+...
+- 全书索引: GET /claude-code-book/agent-api/manifest.json
+```
+
+### Step 2：加载全书索引
+
+```bash
+GET https://islinxu.github.io/claude-code-book/agent-api/manifest.json
+```
+
+```json
+{
+  "title": "Agent 开发：从原理到生产级实践",
+  "total_chapters": 52,
+  "total_word_count": 224429,
+  "dependency_graph": {
+    "ch12": ["ch04", "ch07"],  // ← RAG 章节依赖 ch04 和 ch07
+    ...
+  }
+}
+```
+
+Agent 从 `dependency_graph` 中发现：要学 `ch12`（RAG增强Agent），需要先学 `ch04` 和 `ch07`。
+
+### Step 3：按依赖顺序加载章节
+
+```bash
+# 先读前置依赖
+GET /agent-api/chapters/ch04.json
+```
+
+```json
+{
+  "metadata": {
+    "id": "ch04",
+    "title": "Agent 核心概念",
+    "key_concepts": ["ReAct架构", "Agent循环", "工具调用", ...],
+    "estimated_tokens": 4336
+  },
+  "key_takeaways": ["Agent = 感知+推理+执行+目标+自治", ...],
+  "code_blocks": [
+    {
+      "id": "code-1",
+      "language": "python",
+      "description": "最简化的 Agent 概念模型",
+      "code": "class SimpleAgent:\n    def __init__(self):\n        self.brain = LLM()\n        ...",
+      "runnable": true
+    }
+  ]
+}
+```
+
+Agent 先读 `key_takeaways`（约 200 tokens）判断相关性 → 确认需要 → 读取 `code_blocks` 中的可运行代码。
+
+### Step 4：加载目标章节
+
+```bash
+GET /agent-api/chapters/ch12.json
+```
+
+Agent 从 ch12 的 `code_blocks` 中提取所有 `runnable: true` 的代码，组合成完整的 RAG 实现。
+
+### Step 5：安装技能书（可选）
+
+```bash
+GET /agent-api/skills/rag-agent.md
+```
+
+Agent 将下载的 SKILL.md 保存到 `~/.workbuddy/skills/agent-book-rag-agent/SKILL.md`，此后可作为技能直接调用。
+
+### Token 消耗分析
+
+| 步骤 | Token 消耗 | 说明 |
+|------|-----------|------|
+| llms.txt | ~500 | 站点概述 |
+| manifest.json | ~3,000 | 全书索引（缓存后不再消耗） |
+| ch04.json key_takeaways | ~200 | 快速判断相关性 |
+| ch04.json 全文 | ~4,300 | 按需加载 |
+| ch07.json 全文 | ~5,200 | 按需加载 |
+| ch12.json 全文 | ~8,100 | 目标章节 |
+| **总计** | **~21,300** | 仅加载 3 章（全书约 134K tokens） |
+
+**节约比**：21K / 134K ≈ **节约了 84% 的 token**，通过依赖图驱动的按需加载实现。

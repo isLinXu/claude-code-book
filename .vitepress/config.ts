@@ -158,6 +158,13 @@ const thinkSidebar = [
     ]
   },
   {
+    text: '🎯 实战提炼',
+    collapsed: false,
+    items: [
+      { text: '第12章 Agent开发最佳实践', link: '/think/ch12_Agent开发最佳实践' },
+    ]
+  },
+  {
     text: '📎 参考',
     collapsed: true,
     items: [
