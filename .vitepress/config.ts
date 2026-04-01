@@ -252,6 +252,7 @@ export default defineConfig({
     /^\.\/appendix/,
     /^file:\/\//,
     /\.md$/,
+    /\/LICENSE$/,
   ],
 
   // 排除不需要处理的目录
