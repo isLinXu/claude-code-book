@@ -363,7 +363,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/gatilin/claude-code-book' }
+      { icon: 'github', link: 'https://github.com/isLinXu/claude-code-book' }
     ],
 
     footer: {
@@ -372,7 +372,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/gatilin/claude-code-book/edit/main/:path',
+      pattern: 'https://github.com/isLinXu/claude-code-book/edit/main/:path',
       text: '在 GitHub 上编辑此页'
     },
 
